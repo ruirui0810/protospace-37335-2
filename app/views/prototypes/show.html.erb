@@ -4,7 +4,7 @@
       <p class="prototype__hedding">
         <%= @prototype.title%>
       </p>
-      <%= link_to @prototype.user.name, "/users/#{current_user.id}", class: :prototype__user %>
+      <%= link_to @prototype.user.name, "/users/#{@prototype.id}", class: :prototype_user %>
       <%# プロトタイプの投稿者とログインしているユーザーが同じであれば以下を表示する %>
       <% if user_signed_in? && current_user.id == @prototype.user_id %>
         <div class="prototype__manage">
@@ -34,13 +34,13 @@
 
         <%# ログインしているユーザーには以下のコメント投稿フォームを表示する %>
         <% if user_signed_in? %>
-          <%= form_with model: [@prototype,@comment], local: true do |f|%>
+          <%= form_with model: [@prototype,@comment], local: true do |form|%>
             <div class="field">
-              <%= f.label :content, "コメント" %><br />
-              <%= f.text_field :content %>
+              <%= form.label :content, "コメント" %><br />
+              <%= form.text_field :content %>
             </div>
             <div class="actions">
-              <%= f.submit "送信する", class: :form__btn  %>
+              <%= form.submit "送信する", class: :form__btn  %>
             </div>
           <% end %>
         <% end %>
@@ -50,7 +50,7 @@
           <% @comments.each do |comment|%>
           <%# 投稿に紐づくコメントを一覧する処理を記述する %>
           <li class="comments_list">
-              <%= link_to comment.user.name, "/users/#{current_user.id}", class: :comment_user %>
+              <%= link_to comment.user.name, "/users/#{comment.user.id}", class: :comment_user %>
               <%= comment.content %>
           </li>
           <%end%>
